@@ -1,0 +1,41 @@
+<div class="logo-area">
+     <a href="#home" class="d-inline-flex"><img src="../img/logo-icon.svg" alt="" width="24">
+        <span class="logo-text ms-2"> <img src="../img/logo-1.svg" alt=""></span>
+      </a>
+    </div>
+    <ul class="nav flex-column">
+      <li class="px-4 py-2"><small class="nav-text">Main</small></li>
+      <li><a class="nav-link active" href="#home"><i class="ti ti-home"></i><span
+            class="nav-text">Home</span></a></li>
+
+      <!-- Profesionales: link con dropdown/collapse -->
+      <li>
+        <a class="nav-link collapsed" href="#" data-target="#colapsoProfesionales" data-linkColapsar="collapse"
+           data-bs-toggle="collapse" data-bs-target="#colapsoProfesionales"
+           aria-expanded="false" aria-controls="colapsoProfesionales">
+          <i class="ti ti-box-seam"></i><span class="nav-text">Profesionales</span>
+          <i class="ti ti-chevron-down ms-auto small"></i>
+        </a>
+        <div class="collapse" id="colapsoProfesionales">
+          <ul class="nav flex-column ps-4">
+            <li><a class="nav-link" href="#tecnicos"><span class="nav-text">Técnicos</span></a></li>
+            <li><a class="nav-link" href="#radiologos"><span class="nav-text">Radiólogos</span></a></li>
+            <li><a class="nav-link" href="#medicos"><span class="nav-text">Médicos</span></a></li>
+          </ul>
+        </div>
+      </li>
+
+      <li><a class="nav-link" href="#create-product"><i class="ti ti-plus"></i><span class="nav-text">Add
+            Product</span></a></li>
+    <li><a class="nav-link" href="#reports"><i class="ti ti-receipt"></i><span class="nav-text">Reports</span></a>
+      </li>
+    <li><a class="nav-link" href="#404-error"><i class="ti ti-alert-circle"></i><span class="nav-text">404 Error</span></a>
+      </li>
+      <li><a class="nav-link" href="#docs"><i class="ti ti-file-text"></i><span class="nav-text">Docs</span></a></li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <a class="nav-link nav-link-logout" href="signin.html">
+        <i class="ti ti-logout-2"></i><span class="nav-text">Cerrar sesión</span>
+      </a>
+    </div>

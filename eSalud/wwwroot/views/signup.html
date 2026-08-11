@@ -1,36 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8" />
-  <title>Signup - InApp Inventory Dashboard</title>
+  <title>Crear cuenta - eSalud</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/favicon_io/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon_io/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon_io/favicon-16x16.png">
-  <link rel="manifest" href="./assets/images/favicon_io/site.webmanifest">
-  <!-- CSS compilado desde scss/style.scss (ya incluye Bootstrap) -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../img/favicon_io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon_io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon_io/favicon-16x16.png">
+  <link rel="manifest" href="../img/favicon_io/site.webmanifest">
   <link href="../css/style.css" rel="stylesheet">
-  <!-- Iconos Tabler (usados como <i class="ti ti-..."> en toda la vista) -->
   <link href="../libr/tabler-icons/tabler-icons.min.css" rel="stylesheet">
-
 </head>
 
 <body>
-
 
 <div class="container d-flex align-items-center justify-content-center min-vh-100">
   <div class="card " style="max-width:420px; width:100%;">
     <div class="card-body p-5">
       <div class="text-center mb-3">
-     <a href="index.html" class="mb-4 d-inline-block"><img src="./assets/images/logo-icon.svg" alt="" width="36">
-      <span class="ms-2"> <img src="./assets/images/logo.svg" alt=""></span>
+     <a href="index.html" class="mb-4 d-inline-block"><img src="../img/logo-icon.svg" alt="" width="36">
+      <span class="ms-2"> <img src="../img/logo-1.svg" alt=""></span>
       </a>
         <h1 class="card-title mb-5 h5">Create your account</h1>
 
       </div>
 
-      <form class="needs-validation mt-3" novalidate>
+      <form id="signupForm" class="needs-validation mt-3" novalidate>
         <div class="mb-3">
           <label for="fullName" class="form-label">Full name</label>
           <input id="fullName" type="text" class="form-control" placeholder="Jane Doe" required>
@@ -62,7 +58,7 @@
           <div class="invalid-feedback">You must agree before continuing.</div>
         </div>
 
-        <button class="btn btn-primary w-100" type="submit">Sign up</button>
+        <button type="submit" class="btn btn-primary w-100">Sign up</button>
       </form>
 
       <div class="text-center mt-3 small text-muted">
@@ -72,13 +68,9 @@
   </div>
 </div>
 
-
-
-  <!-- Bootstrap JS (incluye Popper, hace falta para data-bs-toggle="dropdown") -->
-   <script src="../libr/bootstrap/js/bootstrap.bundle.min.js"></script>
-   <script src="../js/sidebar.js"></script>
-
+  <!-- Página independiente: no carga main.js ni sidebar.js, no tiene navbar/sidebar -->
+  <script src="../libr/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
-</html>""
+</html>

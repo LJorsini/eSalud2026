@@ -1,4 +1,5 @@
-const sidebar = document.getElementById('sidebar');
+function initSidebar() {
+  const sidebar = document.getElementById('sidebar');
     const content = document.getElementById('content');
     const topbar = document.getElementById('topbar');
     const toggleBtn = document.getElementById('toggleBtn');
@@ -41,3 +42,9 @@ const sidebar = document.getElementById('sidebar');
         }
       });
     }
+
+}
+
+
+
+
