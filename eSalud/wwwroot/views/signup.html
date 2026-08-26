@@ -22,24 +22,30 @@
      <a href="index.html" class="mb-4 d-inline-block"><img src="../img/logo-icon.svg" alt="" width="36">
       <span class="ms-2"> <img src="../img/logo-1.svg" alt=""></span>
       </a>
-        <h1 class="card-title mb-5 h5">Create your account</h1>
+        <h1 class="card-title mb-5 h5">Crear cuenta</h1>
 
       </div>
 
-      <form id="signupForm" class="needs-validation mt-3" novalidate>
+      <form id="formularioRegistro" class="needs-validation mt-3" novalidate>
         <div class="mb-3">
-          <label for="fullName" class="form-label">Full name</label>
-          <input id="fullName" type="text" class="form-control" placeholder="Jane Doe" required>
-          <div class="invalid-feedback">Please enter your name.</div>
+          <label for="nombreCompleto" class="form-label">Nombre completo</label>
+          <input id="nombreCompleto" type="text" class="form-control" placeholder="Ingrese nombre y apellido" required>
+          <div class="invalid-feedback">Por favor ingrese su nombre.</div>
         </div>
 
         <div class="mb-3">
-          <label for="email" class="form-label">Email address</label>
-          <input id="email" type="email" class="form-control" placeholder="name@example.com" required>
-          <div class="invalid-feedback">Please enter a valid email.</div>
+          <label for="email" class="form-label">Direccion de E-mail</label>
+          <input id="email" type="email" class="form-control" placeholder="ingrese su email" required>
+          <div class="invalid-feedback">Ingrese su email.</div>
         </div>
 
         <div class="mb-3">
+          <label for="dni" class="form-label">DNI</label>
+          <input id="dni" type="text" class="form-control" placeholder="ingrese su DNI" required>
+          <div class="invalid-feedback">Ingrese su email.</div>
+        </div>
+
+        <!-- <div class="mb-3">
           <label for="password" class="form-label">Password</label>
           <input id="password" type="password" class="form-control" placeholder="Create a password" required minlength="6">
           <div class="invalid-feedback">Please provide a password (min 6 characters).</div>
@@ -50,19 +56,19 @@
           <input id="confirmPassword" type="password" class="form-control" placeholder="Repeat password" required
             oninput="this.setCustomValidity(document.getElementById('password').value !== this.value ? 'Passwords do not match.' : '')">
           <div class="invalid-feedback">Passwords must match.</div>
-        </div>
+        </div> -->
 
-        <div class="mb-3 form-check">
+        <!-- <div class="mb-3 form-check">
           <input id="terms" class="form-check-input" type="checkbox" required>
           <label class="form-check-label small" for="terms">I agree to the <a href="#" class="text-decoration-none">terms and privacy</a></label>
           <div class="invalid-feedback">You must agree before continuing.</div>
-        </div>
+        </div> -->
 
-        <button type="submit" class="btn btn-primary w-100">Sign up</button>
+        <button type="submit" class="btn btn-primary w-100">Crear cuenta</button>
       </form>
 
       <div class="text-center mt-3 small text-muted">
-        Already have an account? <a href="signin.html" class="link-primary">Sign in</a>
+        ¿Ya tiene una cuenta? <a href="signin.html" class="link-primary">Ingresar</a>
       </div>
     </div>
   </div>
@@ -70,6 +76,7 @@
 
   <!-- Página independiente: no carga main.js ni sidebar.js, no tiene navbar/sidebar -->
   <script src="../libr/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/registro.js"></script>
 
 </body>
 

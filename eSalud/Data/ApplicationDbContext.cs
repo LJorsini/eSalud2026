@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using eSalud.Models;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -17,5 +18,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
  
 
     // Se van a agregar los dbset
+    public DbSet<Administrador> Administradores {get; set;}
 
 }

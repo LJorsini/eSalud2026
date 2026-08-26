@@ -1,4 +1,4 @@
-let linkApi = 'http://localhost:5500/Api';
+
 
 
 
