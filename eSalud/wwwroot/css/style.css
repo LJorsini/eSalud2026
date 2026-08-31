@@ -24604,3 +24604,10 @@ fieldset:disabled .btn {
 .sidebar.collapsed .sidebar-footer {
   padding: 8px 0 16px;
 }
+
+.errorCampoVacio {
+  color: red;
+  font-size: 0.85rem;
+  display: block;
+  min-height: 1em;
+}

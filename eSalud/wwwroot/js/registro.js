@@ -5,10 +5,44 @@ document.getElementById("formularioRegistro").addEventListener("submit", async (
 
     console.log("registro cargo");
 
+    document.getElementById("errorNombre").textContent ="";
+    document.getElementById("errorEmail").textContent ="";
+    document.getElementById("errorDni").textContent = "";
+
+    let nombreCompleto = document.getElementById("nombreCompleto").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let dni = document.getElementById("dni").value.trim();
+    
+
     const datosUsuarios = {
-        NombreCompleto : document.getElementById("nombreCompleto").value,
-        Email : document.getElementById("email").value,
-        DNI : document.getElementById("dni").value
+        NombreCompleto : nombreCompleto,
+        Email : email,
+        DNI : dni
+    }
+
+    let campoCompleto = true;
+
+    if(!nombreCompleto)
+    {
+        document.getElementById("errorNombre").textContent = "Falta ingresar el nombre";
+        compoCompleto = false;
+    }
+
+    if(!email)
+    {
+        document.getElementById("errorEmail").textContent = "Falta ingresar el Email";
+        campoCompleto = false;
+    }
+
+    if(!dni)
+    {
+        document.getElementById("errorDni").textContent = "Falta el nombre ingresar el DNI";
+        campoCompleto = false;
+    }
+
+    if(!campoCompleto)
+    {
+        return;
     }
 
     try 

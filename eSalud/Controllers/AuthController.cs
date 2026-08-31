@@ -46,7 +46,11 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> RegistrarUsuario(Registro DatosdatosUsuarios)
     {
 
-        var adminExiste = await _context.Administradores.Where(a => a.DNI == DatosdatosUsuarios.DNI).FirstOrDefaultAsync();
+        
+
+        try
+        {
+            var adminExiste = await _context.Administradores.Where(a => a.DNI == DatosdatosUsuarios.DNI && a.Email == DatosdatosUsuarios.Email).FirstOrDefaultAsync();
 
         var userRegistrado = new ApplicationUser
         {
@@ -85,8 +89,11 @@ public class AuthController : ControllerBase
         {
            return BadRequest(resultado.Errors);
         }
-
-        
+        }
+        catch (Exception error)
+        {
+            return StatusCode(500, "Ocurrio un error inesperado");
+        }
     }
 
     private string GenerarLegajo (string rol, int id)
