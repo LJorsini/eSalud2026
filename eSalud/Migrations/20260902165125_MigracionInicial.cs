@@ -48,9 +48,10 @@ namespace eSalud.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     NombreCompleto = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Dni = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -205,6 +206,13 @@ namespace eSalud.Migrations
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_Dni",
+                table: "AspNetUsers",
+                column: "Dni",
+                unique: true,
+                filter: "[Dni] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",

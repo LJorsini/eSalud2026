@@ -20,4 +20,13 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     // Se van a agregar los dbset
     public DbSet<Administrador> Administradores {get; set;}
 
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+
+        builder.Entity<ApplicationUser>()
+            .HasIndex(u => u.Dni)
+            .IsUnique();
+    }
+
 }

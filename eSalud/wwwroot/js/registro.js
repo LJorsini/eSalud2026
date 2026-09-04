@@ -57,12 +57,28 @@ document.getElementById("formularioRegistro").addEventListener("submit", async (
     const resultado = await respuesta.text();
     if (respuesta.ok)
     {
-        alert(resultado)
-        /* window.location.href = "../../views/usuarios/signin.html"; */
+        /* alert(resultado) */
+        await Swal.fire({
+        position: "center",
+        icon: "success",
+        title: resultado,
+        showConfirmButton: false,
+        timer: 1500
+        });
+        
+        window.location.href = "signin.html";
     }
     else {
         console.error(resultado);
-        alert("Registro Fallido" + resultado);
+       
+        /* alert("Registro Fallido" + resultado); */
+        const error = resultado
+        Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error,
+        
+    });
     }
     } catch (error) {
         console.error(error);

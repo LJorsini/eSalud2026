@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace eSalud.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260826011215_MigracionInicial")]
+    [Migration("20260902165125_MigracionInicial")]
     partial class MigracionInicial
     {
         /// <inheritdoc />
@@ -35,6 +35,9 @@ namespace eSalud.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Dni")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -80,6 +83,10 @@ namespace eSalud.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Dni")
+                        .IsUnique()
+                        .HasFilter("[Dni] IS NOT NULL");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");

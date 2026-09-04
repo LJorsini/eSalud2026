@@ -11,6 +11,7 @@
   <link rel="manifest" href="../img/favicon_io/site.webmanifest">
   <link href="../css/style.css" rel="stylesheet">
   <link href="../libr/tabler-icons/tabler-icons.min.css" rel="stylesheet">
+  
 </head>
 
 <body>
@@ -19,7 +20,7 @@
   <div class="card " style="max-width:420px; width:100%;">
     <div class="card-body p-5">
       <div class="text-center mb-3">
-     <a href="index.html" class="mb-4 d-inline-block"><img src="../img/logo-icon.svg" alt="" width="36">
+      <a href="index.html" class="mb-4 d-inline-block"><img src="../img/logo-icon.svg" alt="" width="36">
       <span class="ms-2"> <img src="../img/logo-1.svg" alt=""></span>
       </a>
         <h1 class="card-title mb-5 h5">Crear cuenta</h1>
@@ -31,21 +32,21 @@
           <label for="nombreCompleto" class="form-label">Nombre completo</label>
           <input id="nombreCompleto" type="text" class="form-control" placeholder="Ingrese nombre y apellido" required>
           <span id="errorNombre" class="errorCampoVacio"></span>
-          <div class="invalid-feedback">Por favor ingrese su nombre.</div>
+          <!-- <div class="invalid-feedback">Por favor ingrese su nombre.</div> --> <!-- Veren css -->
         </div>
 
         <div class="mb-3">
           <label for="email" class="form-label">Direccion de E-mail</label>
           <input id="email" type="email" class="form-control" placeholder="ingrese su email" required>
           <span id="errorEmail" class="errorCampoVacio"></span>
-          <div class="invalid-feedback">Ingrese su email.</div>
+          <!-- <div class="invalid-feedback">Ingrese su email.</div>  Veren css -->
         </div>
 
         <div class="mb-3">
           <label for="dni" class="form-label">DNI</label>
           <input id="dni" type="text" class="form-control" placeholder="ingrese su DNI" required>
           <span id="errorDni" class="errorCampoVacio"></span>
-          <div class="invalid-feedback">Ingrese su email.</div>
+          <!-- <div class="invalid-feedback">Ingrese su email.</div>  Veren css -->
         </div>
 
         <!-- <div class="mb-3">
@@ -80,6 +81,7 @@
   <!-- Página independiente: no carga main.js ni sidebar.js, no tiene navbar/sidebar -->
   <script src="../libr/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="../js/registro.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 
