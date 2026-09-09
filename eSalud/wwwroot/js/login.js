@@ -15,6 +15,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     const datosLogin = {
         Email : email,
         Password : password
+        
     }
 
     let campoCompleto = true;
@@ -62,6 +63,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
         localStorage.setItem("token", resultado.token);
         localStorage.setItem("refreshToken", resultado.refreshToken);
         localStorage.setItem("email", datosLogin.Email);
+        localStorage.setItem("nombreCompleto", datosLogin.NombreCompleto);
 
         window.location.href = "index.html";
 

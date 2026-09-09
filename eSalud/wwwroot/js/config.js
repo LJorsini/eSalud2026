@@ -12,6 +12,32 @@ function getEmail() {
     return localStorage.getItem("email");
 }
 
+function getDatosUsuarios()
+{
+  const token = getToken();
+
+  if(!token)
+  {
+    return null;
+  }
+
+  const playload = JSON.parse(atob(token.split('.')[1]));
+
+  return {
+    id: playload.id,
+    userName: playload.userName,
+    email: playload.email,
+    nombreCompleto: playload.nombreCompleto,
+  };
+ 
+  
+}
+
+function getNombreCompleto()
+{
+  return localStorage.getItem("nombreCompleto")
+}
+
 
 function saveTokens(token, refreshToken) {
     localStorage.setItem("token", token);

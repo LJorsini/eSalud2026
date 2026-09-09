@@ -1,8 +1,12 @@
 function verificarUsuario(){
+
     const token = getToken();
-    const email = getEmail(); // suponiendo que guardaste el email al hacer login
+
+    const email = getEmail(); 
+    const nombreCompleto = getNombreCompleto(); 
    //console.log(email);
-   document.getElementById("email-usuario").textContent = email; 
+   /* document.getElementById("emailUsuario").textContent = email; 
+   document.getElementById("nombreUsuario").textContent = nombreCompleto;  */
    //$("#email-usuario").text(email);
 
     if (!token) {
@@ -11,4 +15,51 @@ function verificarUsuario(){
         window.location.href = "signin.html";
         return;
     }
-}  
+
+    const usuario = getDatosUsuarios();
+    console.log(usuario);
+
+    document.getElementById("nombreUsuario").textContent = usuario.nombreCompleto;
+    document.getElementById("emailUsuario").textContent = usuario.email;
+} 
+
+async function cerrarSesion() {
+    //FUNCION DE LEER TOKEN DEL DISPOSITIVO
+    //const getToken = () => localStorage.getItem("token");
+    const token = getToken();
+    const email = localStorage.getItem("email"); // suponiendo que guardaste el email al hacer login
+
+    if (!token || !email) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("email");
+        window.location.href = "login.html";
+        return;
+    }
+    const apiBase = `${linkApi}/auth`;
+    try {
+        const res = await fetch(`${apiBase}/logout`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ email })
+        });
+
+        if (res.ok) {
+            alert("Sesión cerrada correctamente");
+        } else {
+            alert("Error al cerrar sesión: " + await res.text());
+        }
+    } catch (error) {
+        console.error("Error en logout:", error);
+    }
+
+    // Limpiar token y redirigir
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
+   
+    window.location.href = "signin.html";
+}
+
+verificarUsuario();
