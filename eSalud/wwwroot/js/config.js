@@ -27,16 +27,16 @@ function getDatosUsuarios()
     id: playload.id,
     userName: playload.userName,
     email: playload.email,
-    nombreCompleto: playload.nombreCompleto,
+    nombreCompleto: playload.NombreCompleto,
   };
  
   
 }
 
-function getNombreCompleto()
+/* function getNombreCompleto()
 {
   return localStorage.getItem("nombreCompleto")
-}
+} */
 
 
 function saveTokens(token, refreshToken) {

@@ -1,0 +1,108 @@
+<div class="container-fluid">
+    <h1 class="fs-3 mb-1">Configuracion de la Cuenta</h1>
+
+    <div class="container-fluid mt-6">
+      <div class="row">
+        
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body p-4">
+              <form id="addProductForm">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="nombreCompleto" class="form-label">Nombre Completo</label>
+                    <input type="text" class="form-control" id="productName"  required>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="legajo" class="form-label">Legajo</label>
+                    <input type="text" class="form-control" id="legajo"  required>
+                  </div>
+                  <!-- <div class="col-md-6 mb-3">
+                    <label for="dni" class="form-label">DNI</label>
+                    <input type="text" class="form-control" id="productSKU"  required>
+                  </div> -->
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="dni" class="form-label">DNI</label>
+                    <input type="text" class="form-control" id="dni">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="productStock" class="form-label">Fecha de nacimiento</label>
+                    <input type="date" class="form-control" id="productStock">
+                  </div>
+                </div>
+
+                 <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <label for="direccion" class="form-label">Direccion</label>
+                    <input type="text" class="form-control" id="direccion">
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="localidad" class="form-label">Localidad</label>
+                    <!-- <input type="date" class="form-control" id="localidad"> -->
+                    <select class="form-select" id="selectLocalidad"></select>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="provincia" class="form-label">Provincia</label>
+                    <!-- <input type="date" class="form-control" id="provincia"> -->
+                    <select class="form-select" id="provincia"></select>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="telefono" class="form-label">Telefono</label>
+                    <input type="text" class="form-control" id="telefono">
+                  </div>
+                </div>
+
+                <!-- <div class="mb-3">
+                  <label for="productCategory" class="form-label">Category</label>
+                  <select class="form-select" id="productCategory">
+                    <option value="">Select category</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="clothing">Clothing</option>
+                    <option value="food">Food</option>
+                  </select>
+                </div> -->
+                <!-- <div class="mb-3">
+                  <label for="productImage" class="form-label">Product Image</label>
+                  <input type="file" class="form-control" id="productImage" accept="image/*" required>
+                </div> -->
+                <!-- <div class="mb-3">
+                  <label for="productDescription" class="form-label">Description</label>
+                  <textarea class="form-control" id="productDescription" rows="4"
+                    placeholder="Enter product description"></textarea>
+                </div> -->
+                <div class="d-flex gap-2">
+                  <button type="submit" class="btn btn-primary" onclick="Modificar()">Guardar</button>
+                  <button type="reset" class="btn btn-secondary">Cancelar</button>
+                </div>
+
+              </form>
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <footer class="text-center py-2 mt-6 text-secondary ">
+            <p class="mb-0">Copyright © 2026 InApp Inventory Dashboard. Developed by <a href="https://codescandy.com/" target="_blank" class="text-primary">CodesCandy</a> • Distributed by <a href="https://themewagon.com/" target="_blank" class="text-primary">ThemeWagon</a> </p>
+          </footer>
+        </div>
+
+      </div>
+
+    </div>
+</div>

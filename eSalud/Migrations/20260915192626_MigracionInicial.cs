@@ -12,23 +12,6 @@ namespace eSalud.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Administradores",
-                columns: table => new
-                {
-                    AdministradirId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NombreCompleto = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FechaNacimineto = table.Column<DateOnly>(type: "date", nullable: true),
-                    DNI = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Legajo = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Administradores", x => x.AdministradirId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -67,6 +50,19 @@ namespace eSalud.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Provincias",
+                columns: table => new
+                {
+                    ProvinciaId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NombreProvincia = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Provincias", x => x.ProvinciaId);
                 });
 
             migrationBuilder.CreateTable(
@@ -175,6 +171,141 @@ namespace eSalud.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Localidades",
+                columns: table => new
+                {
+                    LocalidadId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NombreLocalidad = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProvinciaId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Localidades", x => x.LocalidadId);
+                    table.ForeignKey(
+                        name: "FK_Localidades_Provincias_ProvinciaId",
+                        column: x => x.ProvinciaId,
+                        principalTable: "Provincias",
+                        principalColumn: "ProvinciaId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Administradores",
+                columns: table => new
+                {
+                    AdministradorId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NombreCompleto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FechaNacimiento = table.Column<DateOnly>(type: "date", nullable: true),
+                    DNI = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LocalidadId = table.Column<int>(type: "int", nullable: true),
+                    Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Legajo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Activo = table.Column<bool>(type: "bit", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Administradores", x => x.AdministradorId);
+                    table.ForeignKey(
+                        name: "FK_Administradores_Localidades_LocalidadId",
+                        column: x => x.LocalidadId,
+                        principalTable: "Localidades",
+                        principalColumn: "LocalidadId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Medicos",
+                columns: table => new
+                {
+                    MedicoId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NombreCompleto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FechaNacimiento = table.Column<DateOnly>(type: "date", nullable: true),
+                    DNI = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LocalidadId = table.Column<int>(type: "int", nullable: true),
+                    CP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Legajo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Medicos", x => x.MedicoId);
+                    table.ForeignKey(
+                        name: "FK_Medicos_Localidades_LocalidadId",
+                        column: x => x.LocalidadId,
+                        principalTable: "Localidades",
+                        principalColumn: "LocalidadId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Pacientes",
+                columns: table => new
+                {
+                    PacienteId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NombreCompleto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FechaNacimiento = table.Column<DateOnly>(type: "date", nullable: true),
+                    DNI = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LocalidadId = table.Column<int>(type: "int", nullable: true),
+                    CP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HistoriaMedica = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pacientes", x => x.PacienteId);
+                    table.ForeignKey(
+                        name: "FK_Pacientes_Localidades_LocalidadId",
+                        column: x => x.LocalidadId,
+                        principalTable: "Localidades",
+                        principalColumn: "LocalidadId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tecnicos",
+                columns: table => new
+                {
+                    TecnicoId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NombreCompleto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FechaNacimiento = table.Column<DateOnly>(type: "date", nullable: true),
+                    DNI = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LocalidadId = table.Column<int>(type: "int", nullable: true),
+                    CP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Legajo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tecnicos", x => x.TecnicoId);
+                    table.ForeignKey(
+                        name: "FK_Tecnicos_Localidades_LocalidadId",
+                        column: x => x.LocalidadId,
+                        principalTable: "Localidades",
+                        principalColumn: "LocalidadId");
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Administradores_LocalidadId",
+                table: "Administradores",
+                column: "LocalidadId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -220,6 +351,26 @@ namespace eSalud.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Localidades_ProvinciaId",
+                table: "Localidades",
+                column: "ProvinciaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Medicos_LocalidadId",
+                table: "Medicos",
+                column: "LocalidadId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pacientes_LocalidadId",
+                table: "Pacientes",
+                column: "LocalidadId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tecnicos_LocalidadId",
+                table: "Tecnicos",
+                column: "LocalidadId");
         }
 
         /// <inheritdoc />
@@ -244,10 +395,25 @@ namespace eSalud.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Medicos");
+
+            migrationBuilder.DropTable(
+                name: "Pacientes");
+
+            migrationBuilder.DropTable(
+                name: "Tecnicos");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Localidades");
+
+            migrationBuilder.DropTable(
+                name: "Provincias");
         }
     }
 }

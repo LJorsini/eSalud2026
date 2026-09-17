@@ -3,7 +3,7 @@ function verificarUsuario(){
     const token = getToken();
 
     const email = getEmail(); 
-    const nombreCompleto = getNombreCompleto(); 
+    /* const nombreCompleto = getNombreCompleto();  */
    //console.log(email);
    /* document.getElementById("emailUsuario").textContent = email; 
    document.getElementById("nombreUsuario").textContent = nombreCompleto;  */

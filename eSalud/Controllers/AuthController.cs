@@ -131,7 +131,10 @@ public class AuthController : ControllerBase
             _context.Administradores.Add(administrador);
             await _context.SaveChangesAsync();
 
-            administrador.Legajo = GenerarLegajo("ADMINISTRADOR", administrador.AdministradirId);
+            await _userManager.AddToRoleAsync(userRegistrado, "ADMINISTRADOR");
+
+            administrador.Legajo = GenerarLegajo("ADMINISTRADOR", administrador.AdministradorId);
+            administrador.UserId = userRegistrado.Id;
             await _context.SaveChangesAsync();
 
 
@@ -173,9 +176,15 @@ public class AuthController : ControllerBase
             //SI EL USUARIO ES ENCONTRADO Y LA CONTRASEÑA ES CORRECTA
             var claims = new[]
             {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            /* new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Name, user.UserName),
             new Claim(ClaimTypes.Email, user.Email),
+            new Claim("NombreCompleto", user.NombreCompleto),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) */
+            new Claim("id", user.Id.ToString()),
+            new Claim("userName", user.UserName),
+            new Claim("email", user.Email),
+            new Claim("NombreCompleto", user.NombreCompleto),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
@@ -222,4 +231,72 @@ public class AuthController : ControllerBase
         rng.GetBytes(randomBytes);
         return Convert.ToBase64String(randomBytes);
     }
+
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout([FromBody] LogoutRequest model)
+    {
+        var user = await _userManager.FindByEmailAsync(model.Email);
+        if (user == null)
+            return BadRequest();
+
+        await _userManager.RemoveAuthenticationTokenAsync(user, "MyApp", "RefreshToken");
+        return Ok("Sesión cerrada correctamente");
     }
+
+    [HttpPost("refresh-token")]
+    public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest login)
+    {
+        //BUSCAMOS EL USUARIO POR EMAIL EN BASE DE DATOS
+        var user = await _userManager.FindByEmailAsync(login.Email);
+        if (user == null)
+            return Unauthorized();
+
+        //BUSCAMOS EL TOKENREFRESH GUARDADO
+        var savedToken = await _userManager.GetAuthenticationTokenAsync(user, "MyApp", "RefreshToken");
+
+        //COMPARAMOS EL REFRESH TOKEN DE BD CON EL GUARDADO EN EL DISPOSITIVO DEL USUARIO PARA UNA MAYOR SEGURIDAD
+        if (savedToken != login.RefreshToken)
+            return Unauthorized("Refresh token inválido");
+
+        //GENERAMOS EL NUEVO TOKEN DE ACCESO PRINCIPAL
+        var claims = new[]
+        {
+         /* new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+         new Claim(ClaimTypes.Name, user.UserName),
+         new Claim(ClaimTypes.Email, user.Email),
+         new Claim("NombreCompleto", user.NombreCompleto),
+         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) */
+         new Claim("id", user.Id.ToString()),
+         new Claim("userName", user.UserName),
+         new Claim("email", user.Email),
+         new Claim("NombreCompleto", user.NombreCompleto),
+         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+    };
+
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        var newToken = new JwtSecurityToken(
+            issuer: _configuration["Jwt:Issuer"],
+            audience: _configuration["Jwt:Issuer"],
+            claims: claims,
+            expires: DateTime.Now.AddMinutes(15),
+            signingCredentials: creds
+        );
+
+        var jwt = new JwtSecurityTokenHandler().WriteToken(newToken);
+
+        //GENERAMOS UN NUEVO REFRESH TOCKEN
+        var newRefreshToken = GenerarRefreshToken();
+        //VOLVEMOS A GUARDAR ESE REGISTRO
+        await _userManager.SetAuthenticationTokenAsync(user, "MyApp", "RefreshToken", newRefreshToken);
+
+        return Ok(new
+        {
+            token = jwt,
+            refreshToken = newRefreshToken
+        });
+    }
+
+    
+}
