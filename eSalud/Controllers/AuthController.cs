@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using eSalud.Helpers;
 
 // Si desarrollamdos una API pura, especialmente para consumir desde frontend o apps móviles:
 //Usamos a modo organizativo [Route("api/[controller]")]
@@ -133,7 +134,7 @@ public class AuthController : ControllerBase
 
             await _userManager.AddToRoleAsync(userRegistrado, "ADMINISTRADOR");
 
-            administrador.Legajo = GenerarLegajo("ADMINISTRADOR", administrador.AdministradorId);
+            administrador.Legajo = LegajoHelper.GenerarLegajo("ADMINISTRADOR", administrador.AdministradorId);
             administrador.UserId = userRegistrado.Id;
             await _context.SaveChangesAsync();
 
@@ -151,19 +152,7 @@ public class AuthController : ControllerBase
         }
     }
 
-    private string GenerarLegajo (string rol, int id)
-    {
-        string prefijo = rol switch
-        {
-            "ADMINISTRADOR" => "A",
-            "MEDICO" => "M",
-            "TECNICOIMAGENES" => "T",
-            "PACIENTE" => "p",
-            _ => "X"
-        };
-
-        return $"{prefijo}{id.ToString("D4")}";
-    }
+    
 
     [HttpPost("login")]
 

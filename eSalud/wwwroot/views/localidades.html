@@ -3,7 +3,7 @@
     <div class="col-12">
       <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="">
-          <h1 class="fs-3 mb-1">Localidades</h1>
+          <h1 class=" mb-1">Localidades</h1>
           <p id="mensajeTablaVacia" class="tablaVacia"></p>
         </div>
         <div>
@@ -18,16 +18,16 @@
 
   <!-- Tabla -->
   <div class="card table-responsive">
-    <table class="table mb-0 text-nowrap table-hover">
+    <table class="table mb-0 text-nowrap ">
       <thead class="table-light border-light">
         <tr>
           <th scope="col">Localidad</th>
           <th scope="col">Provincia</th>
           <th scope="col"></th>
-          <th scope="col"></th>
+          
         </tr>
       </thead>
-      <tbody class="tbodyLocalidades">
+      <tbody id="tbodyLocalidades">
 
       </tbody>
     </table>
@@ -45,8 +45,8 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title fs-5" id="tituloModal">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
       </div>
       <div class="modal-body">
         <div class="row">
@@ -58,11 +58,20 @@
                   <input type="" id="localidadId" value="0" />
 
                   <div class="row">
-                    <div class="col-md-12 mb-3">
+                    <div class="col-md-8 mb-3">
                       <label for="nombreLocalidad" class="form-label">Nombre Localidad</label>
-                      <input type="text" class="form-control" id="nombreLocalidad"
+                      <input type="text" class="form-control mayuscula" id="nombreLocalidad"
                         placeholder="Ingrese el nombre de la localidad">
+                      <span id="errorNombreLocalidad" class="errorCampoVacio"></span>
                     </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label for="cpLocalidad" class="form-label">Codigo postal</label>
+                      <input type="text" class="form-control mayuscula" id="cpLocalidad"
+                        placeholder="Ingrese el codigo postal">
+                      <span id="errorCP" class="errorCampoVacio"></span>
+                    </div>
+                    
                   </div>
 
 
@@ -71,6 +80,7 @@
                     <select class="form-select" id="selectProvincias">
                       <option value="" >-- Seleccione la provincia --</option>
                     </select>
+                    <span id="errorSeleccionProvincia" class="errorCampoVacio"></span>
                   </div>
 
 
@@ -86,8 +96,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onclick="CargarEditarLocalidad()">Gyardar</button>
+        <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal" >Cancelar</button>
+        <button type="button" class="btn btn-primary" onclick="CargarEditarLocalidad()">Guardar</button>
       </div>
     </div>
   </div>

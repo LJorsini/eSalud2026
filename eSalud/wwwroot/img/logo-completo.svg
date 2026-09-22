@@ -1,0 +1,9 @@
+<svg viewBox="0 0 220 56" xmlns="http://www.w3.org/2000/svg">
+  <rect x="2" y="4" width="48" height="48" rx="13" fill="#E66239"/>
+  <rect x="14.7" y="17" width="5.4" height="21.7" rx="2.7" fill="#ffffff"/>
+  <rect x="8.5" y="25.15" width="17.4" height="5.4" rx="2.7" fill="#ffffff"/>
+  <path d="M26 28 L30.5 28 L34 19.3 L38 37.5 L42 28 L46 28" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="64" y="38" font-family="Poppins, 'Segoe UI', Arial, sans-serif" font-weight="700" font-size="30">
+    <tspan fill="#E66239">e</tspan><tspan fill="#262626">Salud</tspan>
+  </text>
+</svg>

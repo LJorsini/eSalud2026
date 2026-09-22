@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace eSalud.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260915192626_MigracionInicial")]
-    partial class MigracionInicial
+    [Migration("20260920125809_SeAgregoCampoCPEnLocalidad")]
+    partial class SeAgregoCampoCPEnLocalidad
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -289,6 +289,9 @@ namespace eSalud.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocalidadId"));
+
+                    b.Property<string>("CP")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NombreLocalidad")
                         .IsRequired()

@@ -250,6 +250,7 @@
   --bs-dark-border-subtle: #262626;
   --bs-heading-color: inherit;
   --bs-link-color: rgb(94.1176470588%, 63.0588235294%, 53.4117647059%);
+  --bs-link-color-blue: #60A5FA;
   --bs-link-hover-color: rgb(95.2941176471%, 70.4470588235%, 62.7294117647%);
   --bs-link-color-rgb: 240, 161, 136;
   --bs-link-hover-color-rgb: 243, 180, 160;
