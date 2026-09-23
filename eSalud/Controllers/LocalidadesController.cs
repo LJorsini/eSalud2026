@@ -80,14 +80,15 @@ public class LocalidadesController : Controller
         localidad.CP = localidad.CP = localidad.CP.Trim().ToUpper();
 
         var localidadExiste = await _context.Localidades
-                              .Where(l => l.NombreLocalidad == localidad.NombreLocalidad && l.ProvinciaId == localidad.ProvinciaId)
+                              /* .Where(l => l.NombreLocalidad == localidad.NombreLocalidad && l.ProvinciaId == localidad.ProvinciaId && l.CP == localidad.CP) */
+                              .Where(cp => cp.CP == localidad.CP)
                               .FirstOrDefaultAsync();
         
         
 
         if(localidadExiste != null)
         {
-           return BadRequest("La localidad ya existe");
+           return BadRequest("El codigo postal ya existe");
         }
 
          var nuevaLocalidad = new Localidad
@@ -99,6 +100,32 @@ public class LocalidadesController : Controller
 
             _context.Localidades.Add(nuevaLocalidad);
             await _context.SaveChangesAsync();
+        return Ok();
+    }
+
+    [HttpPut("{Id}")]
+
+    public async Task<ActionResult> EditarLocalidad(int id, Localidad localidad)
+    {
+        localidad.NombreLocalidad = localidad.NombreLocalidad.Trim().ToUpper();
+        localidad.CP = localidad.CP.Trim().ToUpper();
+
+        var localidadExiste = await _context.Localidades
+                              .Where(l => l.LocalidadId == id)
+                              .FirstOrDefaultAsync();
+
+        if(localidadExiste == null)
+        {
+            return BadRequest("La localidad no existe");
+        }
+
+        localidadExiste.NombreLocalidad = localidad.NombreLocalidad;
+        localidadExiste.CP = localidad.CP;
+        localidadExiste.ProvinciaId = localidadExiste.ProvinciaId;
+
+        await _context.SaveChangesAsync();
+        
+        
         return Ok();
     }
 }

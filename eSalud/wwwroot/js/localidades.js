@@ -126,11 +126,94 @@ function CargarEditarLocalidad()
 
 }
 
-document.querySelectorAll(".mayuscula").forEach(input => {
-    input.addEventListener("input", function () {
-        this.value = this.value.toUpperCase();
+async function EditarLocalidad(id)
+{
+    const authHeaders = () => ({
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${getToken()}`
     });
-});
+    document.getElementById("errorNombreLocalidad").textContent = "";
+    document.getElementById("errorSeleccionProvincia").textContent = "";
+    document.getElementById("errorCP").textContent = "";
+
+    let localidadId = document.getElementById("localidadId").value;
+    let editarNombreLocalidad = document.getElementById("nombreLocalidad").value.trim();
+    let editarCpLocalidad = document.getElementById("cpLocalidad").value.trim();
+    let editarProvinciaId = document.getElementById("selectProvincias").value.trim();
+
+    let campoCompleto = true;
+
+    if(!editarNombreLocalidad)
+    {
+        document.getElementById("errorNombreLocalidad").innerHTML = "Falta el nombre de la localidad";
+        campoCompleto = false;
+    }
+
+    if(!editarCpLocalidad)
+    {
+        document.getElementById("errorCP").innerHTML = "Falta ingresar el codigo postal";
+        campoCompleto = false;
+    }
+
+    if(editarProvinciaId == "0")
+    {
+        document.getElementById("errorSeleccionProvincia").innerHTML = "Ingrese la provincia";
+        campoCompleto = false;
+    }
+
+    if(!campoCompleto)
+    {
+        return
+    }
+
+    const localidaEditada = {
+        /* LocalidadId: localidadId, */
+        NombreLocalidad: editarNombreLocalidad,
+        CP: editarCpLocalidad,
+        ProvinciaId: editarProvinciaId
+    }
+
+    try {
+        const result = await Swal.fire({
+                   title: "¿Desea guardar la localidad?",
+                   showCancelButton: true,
+                   confirmButtonText: "Save",
+    });
+
+    if(result.isConfirmed)
+    {
+        try {
+            const respuesta = await fetch(`${linkApi}/localidades/${id}`, {
+                method: "PUT",
+                headers: authHeaders(),
+                body: JSON.stringify(localidaEditada)
+            });
+
+            if (!respuesta.ok)
+            {
+                throw new error(`Error del servidor: ${response.status}`);
+            }
+
+            await Swal.fire("!Localidad editada!", "", "success")
+
+        } catch (error) {
+            console.error("Error al editar localidad:", error);
+            Swal.fire("Error", "No se pudo editar la localidad", "error");
+        }
+        console.log("confirmado")
+
+        ObtenerLocalidades();
+    }
+
+    
+    } catch (error) {
+        Swal.fire("Error", "No se pudo editar la localidad", "error");
+    }
+
+    console.log(localidaEditada);
+}
+
+
 
 async function CrearLocalidad()
 {
@@ -144,6 +227,7 @@ async function CrearLocalidad()
     document.getElementById("errorNombreLocalidad").textContent = "";
     document.getElementById("errorSeleccionProvincia").textContent = "";
     document.getElementById("errorCP").textContent = "";
+    
 
     let nombreLocalidad = document.getElementById("nombreLocalidad").value.trim();
     nombreLocalidad = nombreLocalidad.toUpperCase();
@@ -275,6 +359,12 @@ function LimpiarModalLocalidad()
     document.getElementById("cpLocalidad").value = "";
     document.getElementById("selectProvincias").value = "";
 }
+
+document.querySelectorAll(".mayuscula").forEach(input => {
+    input.addEventListener("input", function () {
+        this.value = this.value.toUpperCase();
+    });
+});
 
 
 
