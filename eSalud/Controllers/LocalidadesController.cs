@@ -1,4 +1,5 @@
 using eSalud.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -13,6 +14,7 @@ using System.Text;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class LocalidadesController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -39,6 +41,7 @@ public class LocalidadesController : Controller
             {
                 LocalidadId = localidad.LocalidadId,
                 NombreLocalidad = localidad.NombreLocalidad,
+                CP = localidad.CP,
                 ProvinciaId = localidad.Provincia.ProvinciaId,
                 NombreProvincia = localidad.Provincia.NombreProvincia,
             };
@@ -113,19 +116,29 @@ public class LocalidadesController : Controller
         var localidadExiste = await _context.Localidades
                               .Where(l => l.LocalidadId == id)
                               .FirstOrDefaultAsync();
+        
+        var cpExiste = await _context.Localidades
+                          .Where(l => l.LocalidadId != id && l.CP == localidad.CP)
+                          .AnyAsync();
+
 
         if(localidadExiste == null)
         {
             return BadRequest("La localidad no existe");
         }
 
-        localidadExiste.NombreLocalidad = localidad.NombreLocalidad;
-        localidadExiste.CP = localidad.CP;
-        localidadExiste.ProvinciaId = localidadExiste.ProvinciaId;
+        if(cpExiste)
+        {
+            return BadRequest("El cp ya existe");
+        } else{
 
-        await _context.SaveChangesAsync();
-        
-        
+            localidadExiste.NombreLocalidad = localidad.NombreLocalidad;
+            localidadExiste.CP = localidad.CP;
+            localidadExiste.ProvinciaId = localidad.ProvinciaId;
+
+            await _context.SaveChangesAsync();
+        }
+
         return Ok();
     }
 }

@@ -57,7 +57,7 @@ async function ObtenerLocalidades()
 
         const res = await fetch(`${linkApi}/localidades`, {
             method: "GET",
-            headerrs: authHeaders(),
+            headers: authHeaders(),
         });
 
         if(!res.ok)
@@ -93,7 +93,7 @@ async function ObtenerLocalidades()
             row.classList.add("align-middle") 
 
             row.innerHTML = `
-                <td>${localidad.nombreLocalidad}</td>
+                <td>${localidad.nombreLocalidad} (${localidad.cp})</td>
                 <td>${localidad.nombreProvincia.toUpperCase()}</td>
                 <td>
                 <button class="btn btn-primary" onclick="AbrirModalEditar(${localidad.localidadId})">Editar</button>
@@ -193,6 +193,9 @@ async function EditarLocalidad(id)
             {
                 throw new error(`Error del servidor: ${response.status}`);
             }
+
+            /* const resLocalidad = await respuesta.json();
+            console.log(resLocalidad) */
 
             await Swal.fire("!Localidad editada!", "", "success")
 

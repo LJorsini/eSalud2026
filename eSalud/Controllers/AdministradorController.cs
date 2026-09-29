@@ -1,4 +1,5 @@
 using eSalud.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,10 @@ using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+
+[Route("api/[controller]")]
+[ApiController]
+[Authorize]
 
 public class AdministradorController : Controller
 {
