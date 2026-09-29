@@ -96,7 +96,7 @@ async function ObtenerLocalidades()
                 <td>${localidad.nombreLocalidad} (${localidad.cp})</td>
                 <td>${localidad.nombreProvincia.toUpperCase()}</td>
                 <td>
-                <button class="btn btn-primary" onclick="AbrirModalEditar(${localidad.localidadId})">Editar</button>
+                    <button class="btn btn-primary" onclick="AbrirModalEditar(${localidad.localidadId})">Editar</button>
                 </td>
             
             `;

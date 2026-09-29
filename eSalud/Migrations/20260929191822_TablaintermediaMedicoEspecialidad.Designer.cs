@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace eSalud.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260929191822_TablaintermediaMedicoEspecialidad")]
+    partial class TablaintermediaMedicoEspecialidad
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -293,7 +296,7 @@ namespace eSalud.Migrations
 
                     b.HasKey("EspecialidadId");
 
-                    b.ToTable("Especialidades");
+                    b.ToTable("Especialidad");
                 });
 
             modelBuilder.Entity("eSalud.Models.Localidad", b =>
@@ -394,7 +397,7 @@ namespace eSalud.Migrations
 
                     b.HasIndex("MedicoId");
 
-                    b.ToTable("MedicoEspecialidades");
+                    b.ToTable("MedicoEspecialidad");
                 });
 
             modelBuilder.Entity("eSalud.Models.Paciente", b =>
@@ -592,7 +595,7 @@ namespace eSalud.Migrations
             modelBuilder.Entity("eSalud.Models.MedicoEspecialidad", b =>
                 {
                     b.HasOne("eSalud.Models.Especialidad", "Especialidad")
-                        .WithMany("MedicoEspecialidades")
+                        .WithMany("MedicoEspecialidads")
                         .HasForeignKey("EspecialidadId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -628,7 +631,7 @@ namespace eSalud.Migrations
 
             modelBuilder.Entity("eSalud.Models.Especialidad", b =>
                 {
-                    b.Navigation("MedicoEspecialidades");
+                    b.Navigation("MedicoEspecialidads");
                 });
 
             modelBuilder.Entity("eSalud.Models.Medico", b =>

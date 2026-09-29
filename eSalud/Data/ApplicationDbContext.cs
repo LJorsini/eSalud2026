@@ -24,6 +24,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Tecnico> Tecnicos {get; set;}
     public DbSet<Provincia> Provincias {get; set;}
     public DbSet<Localidad> Localidades {get; set;}
+    public DbSet<Especialidad> Especialidades {get; set;}
+    public DbSet<MedicoEspecialidad> MedicoEspecialidades {get; set;}
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

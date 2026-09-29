@@ -18,6 +18,7 @@ namespace eSalud.Models
         public string? Legajo {get; set;}
         public string? MP {get; set;}
         public string? UserId {get; set;}
-        public virtual Localidad Localidad {get; set;}
+        public virtual ICollection<MedicoEspecialidad>? MedicoEspecialidades {get;set;}
+        public virtual Localidad? Localidad {get; set;}
     }
 }
