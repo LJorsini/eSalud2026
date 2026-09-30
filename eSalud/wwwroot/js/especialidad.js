@@ -46,7 +46,7 @@ async function ObtenerEspecialidad()
                 </td>
 
                 <td>
-                    <button class="btn btn-primary" onclick="AbrirModalEditar(${especialidad.especialidadId})">Deshabilitar</button>
+                    <button class="btn btn-primary" onclick="DeshabilitarHabilitar(${especialidad.especialidadId})">Deshabilitar</button>
                 </td>
             
             `
@@ -134,6 +134,71 @@ async function CrearEspecialidad()
 
 async function EditarEspecialidad(id)
 {
+
+    const authHeaders = () => ({
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${getToken()}`
+    });
+
+    document.getElementById("errorNombreEspecialidad").textContent = "";
+
+
+    let especialidadId = document.getElementById("especialidadId").value;
+    let nombreEspecialidad = document.getElementById("nombreEspecialidad").value;
+
+    let campoCompleto = true;
+
+    if(!campoCompleto)
+    {
+        document.getElementById("errorNombreLocalidad").innerHTML = "Falta el nombre de la especialidad";
+        campoCompleto = false;
+    }
+
+    if(!campoCompleto)
+    {
+        return
+    }
+
+    const especialidad = 
+    {
+        EspecialidadId: especialidadId,
+        NombreEspecialidad: nombreEspecialidad
+    };
+
+    try {
+        
+        const result = await Swal.fire({
+             title: "¿Desea editar la especialidad?",
+                   showCancelButton: true,
+                   confirmButtonText: "Save",
+        });
+
+        if(!result.isConfirmed)
+        {
+            return
+        }
+
+        const respuesta = await fetch(`${linkApi}/especialidades/${id}`,{
+            method: "PUT",
+            headers: authHeaders(),
+            body: JSON.stringify(especialidad)
+        });
+
+        if(!respuesta.ok)
+        {
+            throw new error(`Error del servidor: ${response.status}`);
+        }
+
+        await Swal.fire("!Especialidad editada!", "", "success")
+        ObtenerEspecialidad()
+
+    } catch (error) {
+        
+    }
+
+
+
+
     console.log("editar funciona:")
 }
 
@@ -141,12 +206,64 @@ function LimpiarModalEspecialidad()
 {
     document.getElementById("especialidadId").value = 0;
     document.getElementById("nombreEspecialidad").value = "";
+    document.getElementById("tituloModal").value = "";
 }
 
 document.querySelectorAll(".mayuscula").forEach(input => {
     input.addEventListener("input", function () {
         this.value = this.value.toUpperCase();
     });
+});
+
+
+async function AbrirModalEditar(especialidadId)
+{
+
+    const authHeaders = () => ({
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`
+        });
+
+    $("#modalEspecialidad").modal("show");
+
+    /* let tituloModal =  document.getElementById("tituloModal")
+    tituloModal.innerHTML = ""
+    tituloModal.innerHTML = "Editar Especialidad" */
+    
+    console.log(especialidadId)
+
+    document.getElementById("especialidadId").value = especialidadId;
+
+    try {
+
+        const respuesta = await fetch(`${linkApi}/especialidades/${especialidadId}`, {
+            method: "GET",
+            headers: authHeaders(),
+
+        });
+
+        if(!respuesta.ok)
+        {
+            throw new error(`Error del servidor: ${respuesta.status}`);
+        }
+
+        const especialidad = await respuesta.json();
+        console.log(especialidad);
+
+        document.getElementById("especialidadId").value = especialidad.especialidadId;
+        document.getElementById("nombreEspecialidad").value = especialidad.nombreEspecialidad;
+
+
+    } catch (error) {
+        Swal.fire("Error", "No se pudo cargar la especialidad", "error");
+    }
+    
+
+    
+}
+
+document.getElementById("modalEspecialidad").addEventListener("hidden.bs.modal", function () {
+    LimpiarModalEspecialidad();
 });
 
 ObtenerEspecialidad();

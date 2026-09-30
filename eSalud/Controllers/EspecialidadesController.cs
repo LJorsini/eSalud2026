@@ -32,6 +32,7 @@ public class EspecialidadesController : Controller
         {
             var mostrarEspecialidad = new VistaEspecialidades
             {
+                EspecialidadId = especialidad.EspecialidadId,
                 NombreEspecialidad = especialidad.NombreEspecialidad
             };
 
@@ -39,6 +40,26 @@ public class EspecialidadesController : Controller
         }
 
         return Ok(vistaEspecialidad);
+    }
+
+    [HttpGet("{id}")]
+
+    public async Task<ActionResult<VistaEspecialidades>> ObtenerLocalidad(int id)
+    {
+        var especialidad = await _context.Especialidades.Where(e => e.EspecialidadId == id)
+                           .FirstOrDefaultAsync();
+
+        if(especialidad == null)
+        {
+            return NotFound("");
+        }
+
+        var mostrarespecialidad = new VistaEspecialidades
+        {
+            EspecialidadId = especialidad.EspecialidadId,
+            NombreEspecialidad = especialidad.NombreEspecialidad
+        };
+        return Ok(mostrarespecialidad);
     }
 
     [HttpPost]
@@ -62,6 +83,23 @@ public class EspecialidadesController : Controller
 
         _context.Especialidades.Add(nuevaEspecialidad);
         await _context.SaveChangesAsync();
+        return Ok();
+    }
+
+    [HttpPut("{id}")]
+
+    public async Task<ActionResult> EditarEspecialidad(int id, Especialidad especialidad)
+    {
+        var especialidadExiste = await _context.Especialidades.Where(e => e.EspecialidadId == id).FirstOrDefaultAsync();
+
+        if(especialidadExiste == null)
+        {
+            return BadRequest("La especialidad noexiste");
+        }
+
+        especialidadExiste.NombreEspecialidad = especialidad.NombreEspecialidad;
+        await _context.SaveChangesAsync();
+        
         return Ok();
     }
 }
