@@ -169,6 +169,11 @@ using (var scope = app.Services.CreateScope())
             await userManager.AddToRoleAsync(adminUser, "ADMINISTRADOR");
 
            /*  administrador.Legajo = LegajoHelper.GenerarLegajo("ADMINISTRADOR", administrador.AdministradorId); */
+            var legajo = new Legajo
+            {
+                UsuarioId = administrador.UserId,
+                NumeroLegajo = LegajoHelper.GenerarLegajo("ADMINISTRADOR", administrador.AdministradorId),
+            };
             administrador.UserId = adminUser.Id;
             await context.SaveChangesAsync();
         }
