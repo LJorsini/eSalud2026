@@ -10,13 +10,15 @@ namespace eSalud.Models
         public string Email {get; set;}
         public DateOnly? FechaNacimiento {get; set;}
         public string? DNI {get; set;}
+        public Sexo? Sexo {get; set;}
         public string? Direccion {get; set;}
         public string? CP {get; set;}
         public int? LocalidadId {get; set;}
         public string? Telefono {get; set;}
-        public string? Legajo {get; set;}
         public string? UserId {get; set;}
         public bool? Activo {get; set;}
-        public virtual Localidad Localidad {get; set;}
+        public virtual Localidad? Localidad {get; set;}
+        public ApplicationUser? User { get; set; }
+        
     }
 }

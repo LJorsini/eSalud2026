@@ -128,7 +128,7 @@ using (var scope = app.Services.CreateScope())
     };
 
 
-    string [] roles = {"ADMINISTRADOR", "MEDICO", "TECNICOIMAGENES", "PACIENTRE"};
+    string [] roles = {"ADMINISTRADOR", "MEDICO", "TECNICOIMAGENES", "PACIENTRE", "SECRETARIA"};
 
     foreach(var rol in roles)
     {
@@ -168,7 +168,7 @@ using (var scope = app.Services.CreateScope())
 
             await userManager.AddToRoleAsync(adminUser, "ADMINISTRADOR");
 
-            administrador.Legajo = LegajoHelper.GenerarLegajo("ADMINISTRADOR", administrador.AdministradorId);
+           /*  administrador.Legajo = LegajoHelper.GenerarLegajo("ADMINISTRADOR", administrador.AdministradorId); */
             administrador.UserId = adminUser.Id;
             await context.SaveChangesAsync();
         }
