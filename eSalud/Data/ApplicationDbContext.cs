@@ -19,13 +19,16 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     // Se van a agregar los dbset
     public DbSet<Administrador> Administradores {get; set;}
-    public DbSet<Medico> Medicos {get; set;}
-    public DbSet<Paciente> Pacientes {get; set;}
-    public DbSet<Tecnico> Tecnicos {get; set;}
+    /* public DbSet<Medico> Medicos {get; set;} */
+    /* public DbSet<Paciente> Pacientes {get; set;} */
+    /* public DbSet<Tecnico> Tecnicos {get; set;} */
     public DbSet<Provincia> Provincias {get; set;}
     public DbSet<Localidad> Localidades {get; set;}
-    public DbSet<Especialidad> Especialidades {get; set;}
-    public DbSet<MedicoEspecialidad> MedicoEspecialidades {get; set;}
+    /* public DbSet<Especialidad> Especialidades {get; set;} */
+    /* public DbSet<MedicoEspecialidad> MedicoEspecialidades {get; set;} */
+    public DbSet<Legajo> Legajos {get;set;}
+    public DbSet<LegajoVacaciones> LegajosVacaciones {get;set;}
+    public DbSet<LegajoSanciones> LegajosSanciones {get;set;}
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

@@ -75,6 +75,37 @@ public class LocalidadesController : Controller
         return Ok(vistaLocalidad);
     }
 
+    [HttpGet("localidades/{id}")]
+
+    public async Task<ActionResult<IEnumerable<VistaLocalidades>>> GetLocalidadesProvincias(int id)
+    {
+       List<VistaLocalidades> vistaLocalidades = new List<VistaLocalidades>();
+
+       var localidades =  await _context.Localidades
+                         .Include(p => p.Provincia) 
+                         .Where(p => p.ProvinciaId == id).ToListAsync();
+
+        foreach (var localidad in localidades)
+        {
+            var localidadExiste = vistaLocalidades.Any(v => v.LocalidadId == localidad.LocalidadId);
+
+            if(!localidadExiste)
+            {
+                var mostrarLocalidad = new VistaLocalidades
+                {
+                    LocalidadId = localidad.LocalidadId,
+                    NombreLocalidad = localidad.NombreLocalidad,
+                    CP = localidad.CP,
+                };
+
+                vistaLocalidades.Add(mostrarLocalidad);
+            }
+        }
+
+    
+        return Ok(vistaLocalidades);
+    }
+
     [HttpPost]
 
     public async Task<IActionResult> GuardarLocalidad(Localidad localidad)

@@ -25,6 +25,34 @@ public class AdministradorController : Controller
         _userManager = userManager;
     }
 
+[HttpGet]
+
+public async Task<ActionResult<IEnumerable<VistaAdministradores>>> GetAdministradores()
+{
+
+    List<VistaAdministradores> listaAdministradores = new List<VistaAdministradores>();
+
+    var administradores = await _context.Administradores
+                            .Include(u => u.User)
+                            .ThenInclude(l => l.Localidad)
+                            .ToListAsync();
+
+    foreach (var administrador in administradores)
+    {
+        var mostrarAdministrador = new VistaAdministradores
+        {
+            NombreCompleto = administrador.User.NombreCompleto,
+            Dni = administrador.User.Dni,
+            FechaNacimiento = administrador.User.FechaNacimiento,
+            AdministradorId = administrador.AdministradorId,
+        };
+
+        listaAdministradores.Add(mostrarAdministrador);
+    }
+      
+    return Ok(listaAdministradores);  
+}
+/* 
     [HttpGet("obtenerProvincias")]
 
     public IActionResult ObtenerProvincias()
@@ -39,5 +67,5 @@ public class AdministradorController : Controller
         var localidades = _context.Localidades.OrderByDescending(l => l.NombreLocalidad).ToList();
 
         return Ok(localidades);
-    }
+    } */
 }

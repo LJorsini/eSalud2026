@@ -124,11 +124,11 @@ using (var scope = app.Services.CreateScope())
         };
 
         context.Provincias.AddRange(provincias);
-        context.SaveChangesAsync();
+        await context.SaveChangesAsync();
     };
 
 
-    string [] roles = {"ADMINISTRADOR", "MEDICO", "TECNICOIMAGENES", "PACIENTRE", "SECRETARIA"};
+    string [] roles = {"ADMINISTRADOR", "MEDICO", "TECNICOIMAGENES", "PACIENTE", "SECRETARIA"};
 
     foreach(var rol in roles)
     {
@@ -158,24 +158,26 @@ using (var scope = app.Services.CreateScope())
         {
             var administrador = new Administrador
             {
-                NombreCompleto = adminUser.NombreCompleto,
-                Email = adminUser.Email,
-                DNI = adminUser.Dni,
+                UserId = adminUser.Id,
+                
             };
 
             context.Administradores.Add(administrador);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync();  ///en este mismo momento generto el AdministradorId para usarlo en el legajo
 
             await userManager.AddToRoleAsync(adminUser, "ADMINISTRADOR");
 
            /*  administrador.Legajo = LegajoHelper.GenerarLegajo("ADMINISTRADOR", administrador.AdministradorId); */
             var legajo = new Legajo
             {
-                UsuarioId = administrador.UserId,
-                NumeroLegajo = LegajoHelper.GenerarLegajo("ADMINISTRADOR", administrador.AdministradorId),
+                UserId = administrador.UserId,
+                
             };
-            administrador.UserId = adminUser.Id;
+            context.Legajos.Add(legajo);
+
             await context.SaveChangesAsync();
+
+            
         }
     }
 

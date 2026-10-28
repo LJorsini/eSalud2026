@@ -17,7 +17,7 @@ async function ObtenerEspecialidad()
             Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Error al obtener las provincias",
+            text: "Error al obtener las especialidades",
             });
         }
 
@@ -266,4 +266,4 @@ document.getElementById("modalEspecialidad").addEventListener("hidden.bs.modal",
     LimpiarModalEspecialidad();
 });
 
-ObtenerEspecialidad();
+/* ObtenerEspecialidad(); */

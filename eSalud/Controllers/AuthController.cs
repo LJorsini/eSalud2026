@@ -116,25 +116,28 @@ public class AuthController : ControllerBase
 
         var administrador = new Administrador
         {
-            NombreCompleto = DatosdatosUsuarios.NombreCompleto,
+            /* NombreCompleto = DatosdatosUsuarios.NombreCompleto,
             Email = DatosdatosUsuarios.Email,
-            DNI = DatosdatosUsuarios.DNI
+            DNI = DatosdatosUsuarios.DNI */
+             
 
         };
 
         
 
         var resultado = await _userManager.CreateAsync(userRegistrado, DatosdatosUsuarios.Password = "Admin1234+");
+        
 
         
         if (resultado.Succeeded)
         {
+             administrador.UserId = userRegistrado.Id;
             _context.Administradores.Add(administrador);
             await _context.SaveChangesAsync();
 
             await _userManager.AddToRoleAsync(userRegistrado, "ADMINISTRADOR");
 
-            administrador.Legajo = LegajoHelper.GenerarLegajo("ADMINISTRADOR", administrador.AdministradorId);
+            /* administrador.Legajo = LegajoHelper.GenerarLegajo("ADMINISTRADOR", administrador.AdministradorId); */
             administrador.UserId = userRegistrado.Id;
             await _context.SaveChangesAsync();
 

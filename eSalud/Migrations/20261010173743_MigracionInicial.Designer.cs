@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace eSalud.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260920125809_SeAgregoCampoCPEnLocalidad")]
-    partial class SeAgregoCampoCPEnLocalidad
+    [Migration("20261010173743_MigracionInicial")]
+    partial class MigracionInicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,8 +32,17 @@ namespace eSalud.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<bool?>("Activo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("CP")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Direccion")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Dni")
@@ -46,6 +55,12 @@ namespace eSalud.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<DateOnly?>("FechaNacimiento")
+                        .HasColumnType("date");
+
+                    b.Property<int?>("LocalidadId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -53,6 +68,7 @@ namespace eSalud.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NombreCompleto")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
@@ -75,6 +91,9 @@ namespace eSalud.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("Sexo")
+                        .HasColumnType("int");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -87,6 +106,8 @@ namespace eSalud.Migrations
                     b.HasIndex("Dni")
                         .IsUnique()
                         .HasFilter("[Dni] IS NOT NULL");
+
+                    b.HasIndex("LocalidadId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -243,43 +264,87 @@ namespace eSalud.Migrations
                     b.Property<bool?>("Activo")
                         .HasColumnType("bit");
 
-                    b.Property<string>("CP")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DNI")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Direccion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly?>("FechaNacimiento")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Legajo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("LocalidadId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NombreCompleto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telefono")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("AdministradorId");
 
-                    b.HasIndex("LocalidadId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Administradores");
+                });
+
+            modelBuilder.Entity("eSalud.Models.Legajo", b =>
+                {
+                    b.Property<int>("LegajoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LegajoId"));
+
+                    b.Property<string>("Observaciones")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LegajoId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Legajos");
+                });
+
+            modelBuilder.Entity("eSalud.Models.LegajoSanciones", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("Fecha")
+                        .HasColumnType("date");
+
+                    b.Property<int>("LegajoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Observaciones")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LegajoId");
+
+                    b.ToTable("LegajosSanciones");
+                });
+
+            modelBuilder.Entity("eSalud.Models.LegajoVacaciones", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly?>("Desde")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly?>("Hasta")
+                        .HasColumnType("date");
+
+                    b.Property<int>("LegajoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LegajoId");
+
+                    b.ToTable("LegajosVacaciones");
                 });
 
             modelBuilder.Entity("eSalud.Models.Localidad", b =>
@@ -307,103 +372,6 @@ namespace eSalud.Migrations
                     b.ToTable("Localidades");
                 });
 
-            modelBuilder.Entity("eSalud.Models.Medico", b =>
-                {
-                    b.Property<int>("MedicoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MedicoId"));
-
-                    b.Property<string>("CP")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DNI")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Direccion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly?>("FechaNacimiento")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Legajo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("LocalidadId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MP")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NombreCompleto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telefono")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("MedicoId");
-
-                    b.HasIndex("LocalidadId");
-
-                    b.ToTable("Medicos");
-                });
-
-            modelBuilder.Entity("eSalud.Models.Paciente", b =>
-                {
-                    b.Property<int>("PacienteId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PacienteId"));
-
-                    b.Property<string>("CP")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DNI")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Direccion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly?>("FechaNacimiento")
-                        .HasColumnType("date");
-
-                    b.Property<string>("HistoriaMedica")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("LocalidadId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NombreCompleto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telefono")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PacienteId");
-
-                    b.HasIndex("LocalidadId");
-
-                    b.ToTable("Pacientes");
-                });
-
             modelBuilder.Entity("eSalud.Models.Provincia", b =>
                 {
                     b.Property<int>("ProvinciaId")
@@ -421,54 +389,13 @@ namespace eSalud.Migrations
                     b.ToTable("Provincias");
                 });
 
-            modelBuilder.Entity("eSalud.Models.Tecnico", b =>
+            modelBuilder.Entity("ApplicationUser", b =>
                 {
-                    b.Property<int>("TecnicoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasOne("eSalud.Models.Localidad", "Localidad")
+                        .WithMany()
+                        .HasForeignKey("LocalidadId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TecnicoId"));
-
-                    b.Property<string>("CP")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DNI")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Direccion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly?>("FechaNacimiento")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Legajo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("LocalidadId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MP")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NombreCompleto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telefono")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("TecnicoId");
-
-                    b.HasIndex("LocalidadId");
-
-                    b.ToTable("Tecnicos");
+                    b.Navigation("Localidad");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -524,11 +451,44 @@ namespace eSalud.Migrations
 
             modelBuilder.Entity("eSalud.Models.Administrador", b =>
                 {
-                    b.HasOne("eSalud.Models.Localidad", "Localidad")
+                    b.HasOne("ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("LocalidadId");
+                        .HasForeignKey("UserId");
 
-                    b.Navigation("Localidad");
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("eSalud.Models.Legajo", b =>
+                {
+                    b.HasOne("ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("eSalud.Models.LegajoSanciones", b =>
+                {
+                    b.HasOne("eSalud.Models.Legajo", "Legajo")
+                        .WithMany("Sanciones")
+                        .HasForeignKey("LegajoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Legajo");
+                });
+
+            modelBuilder.Entity("eSalud.Models.LegajoVacaciones", b =>
+                {
+                    b.HasOne("eSalud.Models.Legajo", "Legajo")
+                        .WithMany("Vacaciones")
+                        .HasForeignKey("LegajoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Legajo");
                 });
 
             modelBuilder.Entity("eSalud.Models.Localidad", b =>
@@ -540,31 +500,11 @@ namespace eSalud.Migrations
                     b.Navigation("Provincia");
                 });
 
-            modelBuilder.Entity("eSalud.Models.Medico", b =>
+            modelBuilder.Entity("eSalud.Models.Legajo", b =>
                 {
-                    b.HasOne("eSalud.Models.Localidad", "Localidad")
-                        .WithMany()
-                        .HasForeignKey("LocalidadId");
+                    b.Navigation("Sanciones");
 
-                    b.Navigation("Localidad");
-                });
-
-            modelBuilder.Entity("eSalud.Models.Paciente", b =>
-                {
-                    b.HasOne("eSalud.Models.Localidad", "Localidad")
-                        .WithMany()
-                        .HasForeignKey("LocalidadId");
-
-                    b.Navigation("Localidad");
-                });
-
-            modelBuilder.Entity("eSalud.Models.Tecnico", b =>
-                {
-                    b.HasOne("eSalud.Models.Localidad", "Localidad")
-                        .WithMany()
-                        .HasForeignKey("LocalidadId");
-
-                    b.Navigation("Localidad");
+                    b.Navigation("Vacaciones");
                 });
 
             modelBuilder.Entity("eSalud.Models.Provincia", b =>
