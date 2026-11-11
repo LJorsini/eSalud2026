@@ -180,19 +180,147 @@ async function CrearAdministrador()
 {
     console.log("funciona crear adminstrador")
 
-    const authHeaders = () => ({
+    /* const authHeaders = () => ({
         "Content-Type": "application/json",
         "Authorization": `Bearer ${getToken()}`
-    });
+    }); */
+
+    document.getElementById("errorNombreCompleto").textContent = "";
+    document.getElementById("errordni").textContent = "";
+    document.getElementById("errorFechaNacimiento").textContent = "";
+    document.getElementById("errorGenero").textContent = "";
+    document.getElementById("errorDireccion").textContent = ""; 
+    document.getElementById("errorEmail").textContent = "";
+    document.getElementById("errorSeleccionProvincia").textContent = "";
+    document.getElementById("errorSeleccionLocalidad").textContent = "";
+    
+    
+
+
 
     const administradorId = document.getElementById("administradorId").value;
     const nombreAdministrador = document.getElementById("nombreAdministrador").value.trim();
     const dniAdministrador = document.getElementById("dniAdministrador").value.trim();
-    const fechaNacimiento = document.getElementById("fechaNacimientoAdministrador").value();
+    const fechaNacimiento = document.getElementById("fechaNacimientoAdministrador").value;
     const sexo = document.getElementById("generoAdministrador").value;
     const direccion = document.getElementById("direccionAdministrador").value.trim();
+    const telefono = document.getElementById("telefonoAdministrador").value.trim();
+    const email = document.getElementById("email").value.trim();
     const provincia = document.getElementById("selectProvincias").value;
     const localidadId = document.getElementById("selectLocalidad").value;
+
+    let campoCompleto = true;
+
+    if(!nombreAdministrador)
+    {
+        document.getElementById("errorNombreCompleto").innerHTML = "Falta el nombre";
+        campoCompleto = false;
+    }
+
+    if(!dniAdministrador)
+    {
+        document.getElementById("errordni").innerHTML = "Falta el dni";
+        campoCompleto = false;
+    }
+
+    if(!fechaNacimiento)
+    {
+        document.getElementById("errorFechaNacimiento").innerHTML = "Ingrese la fecha de nacimiento";
+        campoCompleto = false;
+    }
+
+    if(!sexo)
+    {
+        document.getElementById("errorGenero").innerHTML = "Ingrese el genero";
+        campoCompleto = false;
+    }
+
+    if(!direccion)
+    {
+        document.getElementById("errorDireccion").innerHTML = "Ingrese la direccion";
+        campoCompleto = false;
+    }
+
+    if(!telefono)
+    {
+        document.getElementById("errortelefono").innerHTML = "Ingrese el telefono";
+        campoCompleto = false;
+    }
+
+    if(!email)
+    {
+        document.getElementById("errorEmail").innerHTML = "Ingrese el email";
+        campoCompleto = false;
+    }
+
+
+    if(!provincia)
+    {
+        document.getElementById("errorSeleccionProvincia").innerHTML = "Seleccione una provincia";
+        campoCompleto = false;
+    }
+
+    if(!localidadId)
+    {
+        document.getElementById("errorSeleccionLocalidad").innerHTML = "Seleccione una localidad";
+        campoCompleto = false;
+    }
+
+    if(!campoCompleto)
+    {
+        return
+    }
+
+    const administrador = {
+
+        /* AdministradorId: administradorId, */
+        NombreCompleto: nombreAdministrador,
+        Dni: dniAdministrador,
+        FechaNacimiento: fechaNacimiento,
+        Sexo: sexo,
+        Direccion: direccion,
+        PhoneNumber: telefono,
+        Email = email,
+        LocalidadId: localidadId,
+
+    }
+
+    console.log(administrador)
+
+    const result = await Swal.fire({
+                   title: "¿Desea crear el administrador?",
+                   showCancelButton: true,
+                   confirmButtonText: "Save",
+    });
+
+    if(result.isConfirmed)
+    {
+        try {
+        const res = await fetch(`${linkApi}/administrador`, {
+            method: "POST",
+            headres: authHeaders(),
+            body: JSON.stringify(administrador),
+        });
+
+        if(!res.ok)
+        {
+            throw new error(`Error del servidor: ${response.status}`);
+        }
+
+        await Swal.fire("!Administrador Creado!", "", "success")
+
+        ObtenerAdministradores();
+    } catch (error) {
+         console.error("Error al guardar localidad:", error);
+         Swal.fire("Error", "No se pudo guardar la localidad", "error");
+    }
+    }
+    
+
+
+
+
+
 
 
 }

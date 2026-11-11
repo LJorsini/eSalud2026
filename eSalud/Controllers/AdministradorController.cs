@@ -45,6 +45,7 @@ public async Task<ActionResult<IEnumerable<VistaAdministradores>>> GetAdministra
             Dni = administrador.User.Dni,
             FechaNacimiento = administrador.User.FechaNacimiento,
             AdministradorId = administrador.AdministradorId,
+            
         };
 
         listaAdministradores.Add(mostrarAdministrador);
@@ -68,4 +69,35 @@ public async Task<ActionResult<IEnumerable<VistaAdministradores>>> GetAdministra
 
         return Ok(localidades);
     } */
+
+[HttpPost]
+
+public async Task<ActionResult> CrearAdministrador(ApplicationUser administrador)
+    {
+        var administradorExiste = await _context.Users.Where(d => d.Dni == administrador.Dni && d.Email == administrador.Email).FirstOrDefaultAsync();
+
+        if(administradorExiste != null)
+        {
+            return BadRequest("El usuario yaexiste");
+        }
+
+        var adminUser = new ApplicationUser
+        {
+            
+            NombreCompleto = administrador.NombreCompleto,
+            Dni = administrador.Dni,
+            FechaNacimiento = administrador.FechaNacimiento,
+            Sexo = administrador.Sexo,
+            Direccion = administrador.Direccion,
+            Localidad = administrador.Localidad,
+            UserName = administrador.Email,
+            Email = administrador.Email,
+            PhoneNumber = administrador.PhoneNumber,
+            
+
+        };
+
+        var resultado = await _userManager.CreateAsync(adminUser, "administrador");
+        return Ok();
+    }
 }
